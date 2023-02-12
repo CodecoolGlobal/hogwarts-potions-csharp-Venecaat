@@ -1,4 +1,7 @@
+using System.Text.Json.Serialization;
+using ElProyecteGrande.Interfaces.Services;
 using HogwartsPotions.Models;
+using HogwartsPotions.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -20,10 +23,17 @@ namespace HogwartsPotions
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers().AddJsonOptions(options =>
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles
+            );
+
             services.AddDbContext<HogwartsContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddControllersWithViews();
+
+            // Add extra Services
+            services.AddScoped<IPotionService, PotionService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
