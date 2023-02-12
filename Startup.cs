@@ -46,6 +46,8 @@ namespace HogwartsPotions
 
             app.UseAuthorization();
 
+            DbInitializer.Seed(app);
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
