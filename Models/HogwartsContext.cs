@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using HogwartsPotions.Models.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HogwartsPotions.Models
 {
@@ -16,6 +17,16 @@ namespace HogwartsPotions.Models
 
         public DbSet<Room> Rooms { get; set; } = default!;
         public DbSet<Student> Students { get; set; } = default!;
+        public DbSet<Recipe> Recipes { get; set; } = default!;
+        public DbSet<Ingredient> Ingredients { get; set; } = default!;
+        public DbSet<Potion> Potions { get; set; } = default!;
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            _ = modelBuilder.Entity<Room>().Navigation(room => room.Residents).AutoInclude();
+            _ = modelBuilder.Entity<Recipe>().Navigation(recipe => recipe.Ingredients).AutoInclude();
+            _ = modelBuilder.Entity<Potion>().Navigation(potion => potion.Ingredients).AutoInclude();
+        }
 
         public async Task AddRoom(Room room)
         {
