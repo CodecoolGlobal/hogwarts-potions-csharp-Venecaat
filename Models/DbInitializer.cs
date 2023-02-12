@@ -75,9 +75,15 @@ namespace HogwartsPotions.Models
             Ingredient bubotuberPus = new() { Name = "Bubotuber Pus" };
             Ingredient dittany = new() { Name = "Dittany" };
             Ingredient unicornTailhair = new() { Name = "Unicorn Tailhair" };
+            Ingredient daisyRoot = new() { Name = "Daisy Root" };
+            Ingredient shrivelfig = new() { Name = " Shrivelfig" };
+            Ingredient caterpillar = new() { Name = "Caterpillar" };
+            Ingredient ratSpleen = new() { Name = "Rat Spleen" };
+            Ingredient leechJuice = new() { Name = "Leech Juice" };
+            Ingredient cowbane = new() { Name = "Cowbane" };
 
             context.Ingredients.AddRange(fairyWing, dragonLiver, dandelionRoot, avocado, crocodileHeart, knotgrass, mandrakeRoot, vervain,
-                wormwood, bubotuberPus, dittany, unicornTailhair);
+                wormwood, bubotuberPus, dittany, unicornTailhair, daisyRoot, shrivelfig, caterpillar, ratSpleen, leechJuice, cowbane);
             context.SaveChanges();
 
             // Recipes
@@ -93,7 +99,17 @@ namespace HogwartsPotions.Models
                 }
             };
 
-            context.Recipes.AddRange(healingPotionRecipe);
+            Recipe shrinkingPotionRecipe = new()
+            {
+                Name = "Shrinking Potion",
+                Student = student1,
+                Ingredients = new List<Ingredient>()
+                {
+                    daisyRoot, shrivelfig, caterpillar, ratSpleen, leechJuice, cowbane, wormwood
+                }
+            };
+
+            context.Recipes.AddRange(healingPotionRecipe, shrinkingPotionRecipe);
             context.SaveChanges();
 
             // Potions
@@ -111,7 +127,19 @@ namespace HogwartsPotions.Models
                 Recipe = healingPotionRecipe,
             };
 
-            context.Potions.AddRange(healingPotion);
+            Potion shrinkingPotion = new()
+            {
+                Name = "Shrinking Potion",
+                Student = student1,
+                Ingredients = new List<Ingredient>()
+                {
+                    daisyRoot, shrivelfig, caterpillar, ratSpleen, leechJuice, cowbane, wormwood
+                },
+                BrewingStatus = BrewingStatus.Discovery,
+                Recipe = healingPotionRecipe,
+            };
+
+            context.Potions.AddRange(healingPotion, shrinkingPotion);
             context.SaveChanges();
         }
     }
