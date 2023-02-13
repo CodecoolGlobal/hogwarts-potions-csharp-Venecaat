@@ -1,5 +1,4 @@
-﻿using HogwartsPotions.Models.Entities;
-
+﻿
 namespace HogwartsPotions.Dto
 {
     public class ResponseIngredient
