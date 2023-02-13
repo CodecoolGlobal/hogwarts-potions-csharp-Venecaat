@@ -87,5 +87,12 @@ namespace HogwartsPotions.Services
 
             return responsePotion.MapTo(potion);
         }
+
+        public async Task<List<PotionWithIdAndName>> GetPotionsByStudentId(long id)
+        {
+            List<Potion> potions = await _context.Potions.ToListAsync();
+
+            return potions.Select(p => new PotionWithIdAndName().MapTo(p)).ToList();
+        }
     }
 }

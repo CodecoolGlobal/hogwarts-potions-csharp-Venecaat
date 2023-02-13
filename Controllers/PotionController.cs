@@ -32,5 +32,11 @@ namespace HogwartsPotions.Controllers
             ResponsePotion potion = await _service.Add(newPotion);
             return StatusCode(StatusCodes.Status201Created, potion);
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<List<PotionWithIdAndName>>> GetAStudentsPotions(long id)
+        {
+            return await _service.GetPotionsByStudentId(id);
+        }
     }
 }

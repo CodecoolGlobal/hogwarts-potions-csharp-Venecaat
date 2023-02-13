@@ -9,4 +9,5 @@ public interface IPotionService
 {
     Task<List<ResponsePotion>> GetAll();
     Task<ResponsePotion> Add(NewPotion newPotion);
+    Task<List<PotionWithIdAndName>> GetPotionsByStudentId(long id);
 }
