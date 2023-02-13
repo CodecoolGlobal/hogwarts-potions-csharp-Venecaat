@@ -94,5 +94,24 @@ namespace HogwartsPotions.Services
 
             return potions.Select(p => new PotionWithIdAndName().MapTo(p)).ToList();
         }
+
+        public async Task<ResponseBrewingPotion> AddBrewingPotion(long studentId)
+        {
+            Student student = await _studentService.GetStudentById(studentId);
+
+            Potion potion = new Potion()
+            {
+                Student = student,
+                BrewingStatus = BrewingStatus.Brew,
+                Ingredients = new List<Ingredient>()
+            };
+
+            ResponseBrewingPotion brewingPotion = new ResponseBrewingPotion().MapTo(potion);
+
+            await _context.Potions.AddAsync(potion);
+            await _context.SaveChangesAsync();
+
+            return brewingPotion;
+        }
     }
 }

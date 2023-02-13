@@ -38,5 +38,13 @@ namespace HogwartsPotions.Controllers
         {
             return await _service.GetPotionsByStudentId(id);
         }
+
+        [HttpPost("brew")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        public async Task<ActionResult<ResponsePotion>> AddNewBrewingPotion([FromBody]long studentId)
+        {
+            ResponseBrewingPotion brewingPotion = await _service.AddBrewingPotion(studentId);
+            return StatusCode(StatusCodes.Status201Created, brewingPotion);
+        }
     }
 }
