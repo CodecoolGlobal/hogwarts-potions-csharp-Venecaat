@@ -5,11 +5,8 @@ using HogwartsPotions.Models.Entities;
 
 namespace HogwartsPotions.Dto
 {
-    public class ResponsePotion
+    public class ResponsePotion : PotionWithIdAndName
     {
-        public long Id { get; set; }
-
-        public string Name { get; set; }
         public ResponseStudent Student { get; set; }
         public List<ResponseIngredient> Ingredients { get; set; }
         public BrewingStatus BrewingStatus { get; set; }
