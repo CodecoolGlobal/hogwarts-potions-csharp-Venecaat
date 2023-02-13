@@ -23,6 +23,7 @@ namespace HogwartsPotions.Models
             _ = modelBuilder.Entity<Recipe>().Navigation(recipe => recipe.Ingredients).AutoInclude();
             _ = modelBuilder.Entity<Potion>().Navigation(potion => potion.Student).AutoInclude();
             _ = modelBuilder.Entity<Potion>().Navigation(potion => potion.Ingredients).AutoInclude();
+            _ = modelBuilder.Entity<Potion>().Navigation(potion => potion.Recipe).AutoInclude();
         }
     }
 }
