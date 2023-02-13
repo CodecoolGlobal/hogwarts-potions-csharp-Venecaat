@@ -24,7 +24,12 @@ namespace HogwartsPotions.Services
             _recipeService = recipeService;
         }
 
-        public async Task<List<Potion>> GetAll() => await _context.Potions.ToListAsync();
+        public async Task<List<ResponsePotion>> GetAll()
+        {
+            List<Potion> potions = await _context.Potions.ToListAsync();
+
+            return potions.Select(p => new ResponsePotion().MapTo(p)).ToList();
+        }
 
         public async Task<ResponsePotion> Add(NewPotion newPotion)
         {

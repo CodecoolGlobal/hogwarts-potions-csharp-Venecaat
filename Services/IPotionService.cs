@@ -7,6 +7,6 @@ namespace ElProyecteGrande.Interfaces.Services;
 
 public interface IPotionService
 {
-    Task<List<Potion>> GetAll();
+    Task<List<ResponsePotion>> GetAll();
     Task<ResponsePotion> Add(NewPotion newPotion);
 }
