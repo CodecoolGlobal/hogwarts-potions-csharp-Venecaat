@@ -34,6 +34,8 @@ namespace HogwartsPotions
 
             // Add extra Services
             services.AddScoped<IPotionService, PotionService>();
+            services.AddScoped<IStudentService, StudentService>();
+            services.AddScoped<IRecipeService, RecipeService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
