@@ -8,7 +8,7 @@ namespace HogwartsPotions.Dto
 
         public string Name { get; set; }
 
-        public ResponseRecipe MapTo(Recipe recipe)
+        public virtual ResponseRecipe MapTo(Recipe recipe)
         {
             Id = recipe.Id;
             Name = recipe.Name;
