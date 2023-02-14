@@ -50,7 +50,7 @@ namespace HogwartsPotions.Controllers
 
         [HttpPut("{potionId}/add")]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<ActionResult<ResponsePotion>> UpdateBrewingPotion(long potionId, [FromBody]IngredientWithName ingredient)
+        public async Task<ActionResult<ResponseBrewingPotion>> UpdateBrewingPotion(long potionId, [FromBody]IngredientWithName ingredient)
         {
             ResponseBrewingPotion brewingPotion = await _service.AddIngredientToBrewingPotion(potionId, ingredient);
 
