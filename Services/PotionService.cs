@@ -39,7 +39,6 @@ namespace HogwartsPotions.Services
             IEnumerable<Ingredient> ingredients = allIngredient.Where(ing => newPotion.IngredientIds.Contains(ing.Id));
 
             List<Recipe> recipes = await _recipeService.GetAllRecipe();
-            IEnumerable<Recipe> recipesWithSameAmountOfIngredients = recipes.Where(r => r.Ingredients.Count == ingredients.Count());
             bool foundRecipe = false;
 
             Student student = await _studentService.GetStudentById(newPotion.StudentId);
@@ -57,7 +56,7 @@ namespace HogwartsPotions.Services
             }
             else
             {
-                foreach (Recipe recipe in recipesWithSameAmountOfIngredients)
+                foreach (Recipe recipe in recipes)
                 {
                     if (recipe.Ingredients.All(ingredients.Contains))
                     {
