@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using ElProyecteGrande.Interfaces.Services;
 using HogwartsPotions.Dto;
@@ -54,6 +55,14 @@ namespace HogwartsPotions.Controllers
             ResponseBrewingPotion brewingPotion = await _service.AddIngredientToBrewingPotion(potionId, ingredient);
 
             return StatusCode(StatusCodes.Status201Created, brewingPotion);
+        }
+
+        [HttpGet("{potionId}/help")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<List<ResponseRecipeWithIngredients>>> GetHelpForBrewingPotion(long potionId)
+        {
+            List<ResponseRecipeWithIngredients> recipes = await _service.GetRecipesForBrewingPotion(potionId);
+            return recipes.Any() ? recipes : StatusCode(StatusCodes.Status404NotFound, "We don't know any recipe with these ingredients!");
         }
     }
 }

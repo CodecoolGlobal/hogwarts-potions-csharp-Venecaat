@@ -136,5 +136,14 @@ namespace HogwartsPotions.Services
 
             return brewingPotion;
         }
+
+        public async Task<List<ResponseRecipeWithIngredients>> GetRecipesForBrewingPotion(long potionId)
+        {
+            Potion potion = await Find(potionId);
+            List<Recipe> recipes = await _context.Recipes.ToListAsync();
+            IEnumerable<Recipe> recipesWithSameIngredients = recipes.Where(r => potion.Ingredients.All(r.Ingredients.Contains));
+
+            return recipesWithSameIngredients.Select(r => new ResponseRecipeWithIngredients().MapTo(r)).ToList();
+        }
     }
 }
