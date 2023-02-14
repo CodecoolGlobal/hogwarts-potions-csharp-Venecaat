@@ -76,7 +76,7 @@ namespace HogwartsPotions.Models
             Ingredient dittany = new() { Name = "Dittany" };
             Ingredient unicornTailhair = new() { Name = "Unicorn Tailhair" };
             Ingredient daisyRoot = new() { Name = "Daisy Root" };
-            Ingredient shrivelfig = new() { Name = " Shrivelfig" };
+            Ingredient shrivelfig = new() { Name = "Shrivelfig" };
             Ingredient caterpillar = new() { Name = "Caterpillar" };
             Ingredient ratSpleen = new() { Name = "Rat Spleen" };
             Ingredient leechJuice = new() { Name = "Leech Juice" };
