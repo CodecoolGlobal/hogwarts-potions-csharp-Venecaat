@@ -118,7 +118,7 @@ namespace HogwartsPotions.Services
         public async Task<Potion> Find(long potionId)
         {
             Potion potion = await _context.Potions
-                .FirstAsync(p => p.Id == potionId);
+                .FirstOrDefaultAsync(p => p.Id == potionId);
             return potion;
         }
 
