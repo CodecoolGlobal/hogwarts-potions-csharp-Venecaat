@@ -128,7 +128,42 @@ namespace HogwartsPotions.Services
             Potion potion = await Find(potionId);
             Ingredient ingredientToAdd = await _ingredientService.Add(ingredient);
             potion.Ingredients.Add(ingredientToAdd);
-            
+
+            if (potion.Ingredients.Count == MaxIngredientsForPotions)
+            {
+                List<Ingredient> allIngredient = await _context.Ingredients.ToListAsync();
+                IEnumerable<Ingredient> ingredients = allIngredient.Where(ing => potion.Ingredients.Contains(ing));
+
+                List<Recipe> recipes = await _recipeService.GetAllRecipe();
+                bool foundRecipe = false;
+
+                Student student = potion.Student;
+
+                foreach (Recipe recipe in recipes)
+                {
+                    if (recipe.Ingredients.All(ingredients.Contains))
+                    {
+                        foundRecipe = true;
+                        potion.Recipe = recipe;
+                        potion.Name = $"{recipe.Name} replica";
+                        break;
+                    }
+                }
+                potion.BrewingStatus = foundRecipe ? BrewingStatus.Replica : BrewingStatus.Discovery;
+
+                if (!foundRecipe)
+                {
+                    potion.Name = $"{student.Name}'s discovery";
+                    potion.Recipe = new Recipe()
+                    {
+                        Name = $"{student.Name}'s discovery",
+                        Student = student,
+                        Ingredients = ingredients.ToList()
+                    };
+                    await _recipeService.AddRecipe(potion.Recipe);
+                }
+            }
+
             ResponseBrewingPotion brewingPotion = new ResponseBrewingPotion().MapTo(potion);
 
             _context.Update(potion);
