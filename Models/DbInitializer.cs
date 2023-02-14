@@ -133,7 +133,7 @@ namespace HogwartsPotions.Models
                 Student = student1,
                 Ingredients = new List<Ingredient>()
                 {
-                    daisyRoot, shrivelfig, caterpillar, ratSpleen, leechJuice, cowbane, wormwood
+                    daisyRoot, shrivelfig, leechJuice, cowbane, wormwood
                 },
                 BrewingStatus = BrewingStatus.Discovery,
                 Recipe = shrinkingPotionRecipe,
