@@ -136,7 +136,7 @@ namespace HogwartsPotions.Models
                     daisyRoot, shrivelfig, caterpillar, ratSpleen, leechJuice, cowbane, wormwood
                 },
                 BrewingStatus = BrewingStatus.Discovery,
-                Recipe = healingPotionRecipe,
+                Recipe = shrinkingPotionRecipe,
             };
 
             context.Potions.AddRange(healingPotion, shrinkingPotion);
