@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using ElProyecteGrande.Interfaces.Services;
 using HogwartsPotions.Dto;
 using HogwartsPotions.Models.Entities;
+using HogwartsPotions.Models.Enums;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -50,8 +51,21 @@ namespace HogwartsPotions.Controllers
 
         [HttpPut("{potionId}/add")]
         [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status423Locked)]
         public async Task<ActionResult<ResponseBrewingPotion>> UpdateBrewingPotion(long potionId, [FromBody]IngredientWithName ingredient)
         {
+            Potion potion = await _service.Find(potionId);
+
+            if (potion is null)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, "We didn't find the potion!");
+            }
+            if (potion.BrewingStatus != BrewingStatus.Brew)
+            {
+                return StatusCode(StatusCodes.Status423Locked, "This potion is complete! You can't add more ingredients!");
+            }
+
             ResponseBrewingPotion brewingPotion = await _service.AddIngredientToBrewingPotion(potionId, ingredient);
 
             return StatusCode(StatusCodes.Status201Created, brewingPotion);
