@@ -36,8 +36,7 @@ namespace HogwartsPotions.Services
         public async Task<Ingredient> FindByName(string name)
         {
             Ingredient ingredient = await _context.Ingredients
-                .AsNoTracking()
-                .FirstAsync(ing => ing.Name.ToLower() == name.ToLower());
+                .FirstOrDefaultAsync(ing => ing.Name.ToLower() == name.ToLower());
             return ingredient;
         }
     }
