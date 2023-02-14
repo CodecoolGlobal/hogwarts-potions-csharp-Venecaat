@@ -15,13 +15,15 @@ namespace HogwartsPotions.Services
         private readonly HogwartsContext _context;
         private readonly IStudentService _studentService;
         private readonly IRecipeService _recipeService;
+        private readonly IIngredientService _ingredientService;
         public const int MaxIngredientsForPotions = 5;
 
-        public PotionService(HogwartsContext context, IStudentService studentService, IRecipeService recipeService)
+        public PotionService(HogwartsContext context, IStudentService studentService, IRecipeService recipeService, IIngredientService ingredientService)
         {
             _context = context;
             _studentService = studentService;
             _recipeService = recipeService;
+            _ingredientService = ingredientService;
         }
 
         public async Task<List<ResponsePotion>> GetAll()
@@ -109,6 +111,27 @@ namespace HogwartsPotions.Services
             ResponseBrewingPotion brewingPotion = new ResponseBrewingPotion().MapTo(potion);
 
             await _context.Potions.AddAsync(potion);
+            await _context.SaveChangesAsync();
+
+            return brewingPotion;
+        }
+
+        public async Task<Potion> Find(long potionId)
+        {
+            Potion potion = await _context.Potions
+                .FirstAsync(p => p.Id == potionId);
+            return potion;
+        }
+
+        public async Task<ResponseBrewingPotion> AddIngredientToBrewingPotion(long potionId, IngredientWithName ingredient)
+        {
+            Potion potion = await Find(potionId);
+            Ingredient ingredientToAdd = await _ingredientService.Add(ingredient);
+            potion.Ingredients.Add(ingredientToAdd);
+            
+            ResponseBrewingPotion brewingPotion = new ResponseBrewingPotion().MapTo(potion);
+
+            _context.Update(potion);
             await _context.SaveChangesAsync();
 
             return brewingPotion;

@@ -46,5 +46,14 @@ namespace HogwartsPotions.Controllers
             ResponseBrewingPotion brewingPotion = await _service.AddBrewingPotion(studentId);
             return StatusCode(StatusCodes.Status201Created, brewingPotion);
         }
+
+        [HttpPut("{potionId}/add")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        public async Task<ActionResult<ResponsePotion>> UpdateBrewingPotion(long potionId, [FromBody]IngredientWithName ingredient)
+        {
+            ResponseBrewingPotion brewingPotion = await _service.AddIngredientToBrewingPotion(potionId, ingredient);
+
+            return StatusCode(StatusCodes.Status201Created, brewingPotion);
+        }
     }
 }
