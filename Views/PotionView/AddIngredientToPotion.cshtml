@@ -21,7 +21,14 @@
                     }
                 </select>
             </div>
-            <input class="btn btn-primary" type="submit" value="Add">
+            @if (Model.BrewingPotion is null)
+            {
+                <input id="submit" class="btn btn-primary" type="submit" value="Add" disabled>
+            }
+            else
+            {
+                <input id="submit" class="btn btn-primary" type="submit" value="Add">
+            }
         </form>
     </div>
     <div class="col">

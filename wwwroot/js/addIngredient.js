@@ -1,6 +1,7 @@
 ﻿const brewingPotionIngredients = document.getElementById("ingredients-container");
 const students = document.getElementById("students");
 const ingredients = document.getElementById("ingredients");
+const submitButton = document.getElementById("submit");
 
 
 async function showBrewingPotionForStudent() {
@@ -20,9 +21,11 @@ async function showBrewingPotionForStudent() {
             }
             content += "</ul>";
         }
+        submitButton.disabled = false;
     }
     else {
         content += "<p class=\"ml-4 pt-2\">You don't have any brewing potion!</p>";
+        submitButton.disabled = true;
     }
     brewingPotionIngredients.innerHTML = content;
 }
