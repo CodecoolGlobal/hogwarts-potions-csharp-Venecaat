@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using HogwartsPotions.Dto;
 using HogwartsPotions.Models;
@@ -14,6 +15,12 @@ namespace HogwartsPotions.Services
         public IngredientService(HogwartsContext context)
         {
             _context = context;
+        }
+
+        public async Task<List<ResponseIngredient>> GetAll()
+        {
+            List<Ingredient> ingredients = await _context.Ingredients.ToListAsync();
+            return ingredients.Select(ing => new ResponseIngredient().MapTo(ing)).ToList();
         }
 
         public async Task<Ingredient> Add(IngredientWithName newIngredient)

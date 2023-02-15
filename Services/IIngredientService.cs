@@ -7,6 +7,7 @@ namespace HogwartsPotions.Services
 {
     public interface IIngredientService
     {
+        Task<List<ResponseIngredient>> GetAll();
         Task<Ingredient> Add(IngredientWithName newIngredient);
         Task<Ingredient> FindByName(string name);
     }
