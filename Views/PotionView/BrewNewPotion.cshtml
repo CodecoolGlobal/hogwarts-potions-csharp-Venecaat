@@ -1,15 +1,16 @@
-﻿
+﻿@model IEnumerable<HogwartsPotions.Dto.ResponseStudent>
+
 <h1>Start Brewing New Potion</h1>
 
 <form class="mt-5">
     <div class="form-group w-25">
         <label for="students"><h5>Select the student</h5></label>
         <select class="form-control" id="students">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
+            @foreach (var student in Model)
+            {
+                <option value="@student.Id">@student.Name</option>
+            }
         </select>
     </div>
+    <input class="btn btn-primary" type="submit" value="Start Brewing">
 </form>
