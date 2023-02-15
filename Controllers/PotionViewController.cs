@@ -87,23 +87,5 @@ namespace HogwartsPotions.Controllers
 
             return View(studentsIngredients);
         }
-
-        //[HttpPost]
-        //[ActionName("AddIngredientToPotion")]
-        //public async Task<ActionResult> AddIngredientToPotionPost()
-        //{
-        //    string studentId = Request.Form["studentId"];
-        //    StudentWithId student = new StudentWithId() { Id = long.Parse(studentId) };
-        //    StringContent content = new StringContent(JsonConvert.SerializeObject(student), Encoding.UTF8, "application/json");
-
-        //    ResponseBrewingPotion potion = new ResponseBrewingPotion();
-
-        //    using (var httpClient = new HttpClient())
-        //    {
-        //        await httpClient.PostAsync("https://localhost:44390/api/Potion/brew", content);
-        //    }
-
-        //    return View("Info", "You started brewing a potion!");
-        //}
     }
 }
