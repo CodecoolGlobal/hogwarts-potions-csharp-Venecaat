@@ -7,7 +7,7 @@
         <form asp-action="AddIngredientToPotion">
             <div class="form-group w-50">
                 <label for="students"><h5>Select the student</h5></label>
-                <select class="form-control mb-3" id="students" name="studentId">
+                <select class="form-control mb-3" id="students" name="studentId" onchange="showBrewingPotionForStudent()">
                     @foreach (var student in Model.Students)
                     {
                         <option value="@student.Id">@student.Name</option>
@@ -26,27 +26,31 @@
     </div>
     <div class="col">
         <h4>Your potion: </h4>
-        @{
-            if (Model.BrewingPotion is null)
-            {
-                <p class="font-weight-bold ml-4 pt-2">You don't have any brewing potion!</p>
-            }
-            else
-            {
-                if (Model.BrewingPotion.Ingredients.Count == 0)
+        <div id="ingredients-container" class="font-weight-bold">
+            @{
+                if (Model.BrewingPotion is null)
                 {
-                    <p class="font-weight-bold ml-4 pt-2">No ingredients yet!</p>
+                    <p class="ml-4 pt-2">You don't have any brewing potion!</p>
                 }
                 else
                 {
-                    <ul class="font-weight-bold">
-                    @foreach (var ingredient in Model.BrewingPotion.Ingredients)
+                    if (Model.BrewingPotion.Ingredients.Count == 0)
                     {
-                        <li class="mt-2">@ingredient.Name</li>
+                        <p class="ml-4 pt-2">No ingredients yet!</p>
                     }
-                    </ul>
+                    else
+                    {
+                        <ul>
+                            @foreach (var ingredient in Model.BrewingPotion.Ingredients)
+                            {
+                                <li class="mt-2">@ingredient.Name</li>
+                            }
+                        </ul>
+                    }
                 }
             }
-        }
+        </div>
     </div>
 </div>
+
+<script src="@Url.Content("~/js/addIngredient.js")"></script>
