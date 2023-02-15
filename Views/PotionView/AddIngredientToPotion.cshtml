@@ -1,0 +1,23 @@
+﻿@model IEnumerable<HogwartsPotions.Dto.ResponseStudent>
+
+<h1>Add Ingredient to a Potion</h1>
+
+<form class="mt-5" asp-action="AddIngredientToPotion">
+    <div class="form-group w-25">
+        <label for="students"><h5>Select the student</h5></label>
+        <select class="form-control mb-3" id="students" name="studentId">
+            @foreach (var student in Model)
+            {
+                <option value="@student.Id">@student.Name</option>
+            }
+        </select>
+        <label for="ingredients"><h5>Select the ingredient</h5></label>
+        <select class="form-control" id="ingredients" name="ingredientId">
+            @foreach (var student in Model)
+            {
+                <option value="@student.Id">@student.Name</option>
+            }
+        </select>
+    </div>
+    <input class="btn btn-primary" type="submit" value="Add">
+</form>
