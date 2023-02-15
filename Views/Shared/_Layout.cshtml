@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"]</title>
+    <title>Hogwarts</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
@@ -18,8 +18,14 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a id="news" class="nav-link text-dark" asp-area="" asp-controller="PotionView" asp-action="Index">Hogwarts Potions</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Brew Potion
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="brewPotion">
+                                <a class="dropdown-item" asp-area="" asp-controller="PotionView" asp-action="BrewNewPotion">Create new potion</a>
+                                <a class="dropdown-item" href="#">Add ingredient to potion</a>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -34,7 +40,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2022 - Hogwarts - <a asp-area="" asp-controller="PotionView"> </a> Keqing - keqing@genshin.com
+            &copy; 2023 - Hogwarts - <a asp-area="" asp-controller="PotionView"> </a> Keqing - keqing@genshin.com
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
