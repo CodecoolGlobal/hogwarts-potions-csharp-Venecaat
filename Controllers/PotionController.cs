@@ -78,5 +78,12 @@ namespace HogwartsPotions.Controllers
             List<ResponseRecipeWithIngredients> recipes = await _service.GetRecipesForBrewingPotion(potionId);
             return recipes.Any() ? recipes : StatusCode(StatusCodes.Status404NotFound, "We don't know any recipe with these ingredients!");
         }
+
+        [HttpGet("brewing/{id}")]
+        public async Task<ActionResult<ResponseBrewingPotion>> GetBrewingPotionByStudentId(long id)
+        {
+            ResponseBrewingPotion potion = await _service.GetBrewingPotionByStudentId(id);
+            return potion;
+        }
     }
 }
