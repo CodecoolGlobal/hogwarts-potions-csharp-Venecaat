@@ -3,6 +3,7 @@ using System.Dynamic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using ElProyecteGrande.Interfaces.Services;
 using HogwartsPotions.Dto;
 using HogwartsPotions.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -13,10 +14,12 @@ namespace HogwartsPotions.Controllers
     public class PotionViewController : Controller
     {
         private readonly IIngredientService _ingredientService;
+        private readonly IPotionService _potionService;
 
-        public PotionViewController(IIngredientService ingredientService)
+        public PotionViewController(IIngredientService ingredientService, IPotionService potionService)
         {
             _ingredientService = ingredientService;
+            _potionService = potionService;
         }
 
         // GET: Main Page
@@ -66,6 +69,7 @@ namespace HogwartsPotions.Controllers
         {
             List<ResponseStudent> students = new List<ResponseStudent>();
             List<ResponseIngredient> ingredients = await _ingredientService.GetAll();
+            ResponseBrewingPotion potion = await _potionService.GetBrewingPotionByStudentId(1);
             dynamic studentsIngredients = new ExpandoObject();
 
             using (var httpClient = new HttpClient())
@@ -79,6 +83,7 @@ namespace HogwartsPotions.Controllers
 
             studentsIngredients.Students = students;
             studentsIngredients.Ingredients = ingredients;
+            studentsIngredients.BrewingPotion = potion;
 
             return View(studentsIngredients);
         }
