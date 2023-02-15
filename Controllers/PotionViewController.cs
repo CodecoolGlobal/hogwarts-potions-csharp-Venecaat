@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Dynamic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using HogwartsPotions.Dto;
+using HogwartsPotions.Services;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -10,6 +12,13 @@ namespace HogwartsPotions.Controllers
 {
     public class PotionViewController : Controller
     {
+        private readonly IIngredientService _ingredientService;
+
+        public PotionViewController(IIngredientService ingredientService)
+        {
+            _ingredientService = ingredientService;
+        }
+
         // GET: Main Page
         public ActionResult Index()
         {
@@ -56,6 +65,8 @@ namespace HogwartsPotions.Controllers
         public async Task<ActionResult<List<ResponseStudent>>> AddIngredientToPotion()
         {
             List<ResponseStudent> students = new List<ResponseStudent>();
+            List<ResponseIngredient> ingredients = await _ingredientService.GetAll();
+            dynamic studentsIngredients = new ExpandoObject();
 
             using (var httpClient = new HttpClient())
             {
@@ -66,7 +77,10 @@ namespace HogwartsPotions.Controllers
                 }
             }
 
-            return View(students);
+            studentsIngredients.Students = students;
+            studentsIngredients.Ingredients = ingredients;
+
+            return View(studentsIngredients);
         }
 
         //[HttpPost]
