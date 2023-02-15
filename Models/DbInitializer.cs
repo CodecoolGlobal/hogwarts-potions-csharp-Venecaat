@@ -29,8 +29,12 @@ namespace HogwartsPotions.Models
                 Capacity = 4,
                 Residents = new HashSet<Student>()
             };
-
             Room room2 = new()
+            {
+                Capacity = 4,
+                Residents = new HashSet<Student>()
+            };
+            Room room3 = new()
             {
                 Capacity = 4,
                 Residents = new HashSet<Student>()
@@ -53,11 +57,35 @@ namespace HogwartsPotions.Models
                 PetType = PetType.Owl,
                 Room = room2
             };
+            Student student3 = new()
+            {
+                Name = "Dakota Nightingale",
+                HouseType = HouseType.Ravenclaw,
+                PetType = PetType.None,
+                Room = room1
+            };
+            Student student4 = new()
+            {
+                Name = "Angel Lambkins",
+                HouseType = HouseType.Hufflepuff,
+                PetType = PetType.Owl,
+                Room = room2
+            };
+            Student student5 = new()
+            {
+                Name = "Shell Firethron",
+                HouseType = HouseType.Slytherin,
+                PetType = PetType.Rat,
+                Room = room3
+            };
             room1.Residents.Add(student1);
             room2.Residents.Add(student2);
+            room1.Residents.Add(student3);
+            room2.Residents.Add(student4);
+            room3.Residents.Add(student5);
 
             context.Rooms.AddRange(room1);
-            context.Students.AddRange(student1, student2);
+            context.Students.AddRange(student1, student2, student3, student4, student5);
             context.SaveChanges();
 
             // Ingredients
