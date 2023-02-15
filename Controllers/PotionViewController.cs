@@ -1,5 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
+using HogwartsPotions.Dto;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace HogwartsPotions.Controllers
 {
@@ -11,17 +15,23 @@ namespace HogwartsPotions.Controllers
             return View();
         }
 
-        //// GET: PotionViewController/Details/5
-        //public ActionResult Details(int id)
-        //{
-        //    return View();
-        //}
+        // GET: Create new potion page
+        [HttpGet]
+        public async Task<ActionResult<List<ResponseStudent>>> BrewNewPotion()
+        {
+            List<ResponseStudent> students = new List<ResponseStudent>();
 
-        //// GET: PotionViewController/Create
-        //public ActionResult Create()
-        //{
-        //    return View();
-        //}
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync("https://localhost:44390/api/Student"))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    students = JsonConvert.DeserializeObject<List<ResponseStudent>>(apiResponse);
+                }
+            }
+
+            return View(students);
+        }
 
         //// POST: PotionViewController/Create
         //[HttpPost]
