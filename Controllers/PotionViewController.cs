@@ -35,6 +35,7 @@ namespace HogwartsPotions.Controllers
         }
 
         [HttpPost]
+        [ActionName("BrewNewPotion")]
         public async Task<ActionResult> BrewNewPotionPost()
         {
             string studentId = Request.Form["studentId"];
@@ -51,61 +52,39 @@ namespace HogwartsPotions.Controllers
             return View("Info", "You started brewing a potion!");
         }
 
-        //// POST: PotionViewController/Create
+        [HttpGet]
+        public async Task<ActionResult<List<ResponseStudent>>> AddIngredientToPotion()
+        {
+            List<ResponseStudent> students = new List<ResponseStudent>();
+
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync("https://localhost:44390/api/Student"))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    students = JsonConvert.DeserializeObject<List<ResponseStudent>>(apiResponse);
+                }
+            }
+
+            return View(students);
+        }
+
         //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create(IFormCollection collection)
+        //[ActionName("AddIngredientToPotion")]
+        //public async Task<ActionResult> AddIngredientToPotionPost()
         //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
+        //    string studentId = Request.Form["studentId"];
+        //    StudentWithId student = new StudentWithId() { Id = long.Parse(studentId) };
+        //    StringContent content = new StringContent(JsonConvert.SerializeObject(student), Encoding.UTF8, "application/json");
 
-        //// GET: PotionViewController/Edit/5
-        //public ActionResult Edit(int id)
-        //{
-        //    return View();
-        //}
+        //    ResponseBrewingPotion potion = new ResponseBrewingPotion();
 
-        //// POST: PotionViewController/Edit/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit(int id, IFormCollection collection)
-        //{
-        //    try
+        //    using (var httpClient = new HttpClient())
         //    {
-        //        return RedirectToAction(nameof(Index));
+        //        await httpClient.PostAsync("https://localhost:44390/api/Potion/brew", content);
         //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
 
-        //// GET: PotionViewController/Delete/5
-        //public ActionResult Delete(int id)
-        //{
-        //    return View();
-        //}
-
-        //// POST: PotionViewController/Delete/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Delete(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
+        //    return View("Info", "You started brewing a potion!");
         //}
     }
 }
