@@ -10,5 +10,6 @@ namespace HogwartsPotions.Services
         Task<List<ResponseIngredient>> GetAll();
         Task<Ingredient> Add(IngredientWithName newIngredient);
         Task<Ingredient> FindByName(string name);
+        Task<Ingredient> FindById(long id);
     }
 }

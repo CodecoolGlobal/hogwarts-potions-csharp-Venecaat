@@ -46,5 +46,12 @@ namespace HogwartsPotions.Services
                 .FirstOrDefaultAsync(ing => ing.Name.ToLower() == name.ToLower());
             return ingredient;
         }
+
+        public async Task<Ingredient> FindById(long id)
+        {
+            Ingredient ingredient = await _context.Ingredients
+                .FirstOrDefaultAsync(ing => ing.Id == id);
+            return ingredient;
+        }
     }
 }
