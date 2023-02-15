@@ -7,6 +7,7 @@ namespace HogwartsPotions.Dto
 {
     public class ResponseBrewingPotion
     {
+        public long Id { get; set; }
         public ResponseStudent Student { get; set; }
         public BrewingStatus BrewingStatus { get; set; }
         public List<ResponseIngredient> Ingredients { get; set; }
@@ -15,6 +16,7 @@ namespace HogwartsPotions.Dto
         {
             ResponseStudent responseStudent = new ResponseStudent();
 
+            Id = potion.Id;
             Student = responseStudent.MapTo(potion.Student);
             Ingredients = potion.Ingredients.Select(ing => new ResponseIngredient() { Id = ing.Id, Name = ing.Name }).ToList();
             BrewingStatus = potion.BrewingStatus;

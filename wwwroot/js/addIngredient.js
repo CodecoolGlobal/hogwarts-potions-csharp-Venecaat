@@ -2,11 +2,19 @@
 const students = document.getElementById("students");
 const ingredients = document.getElementById("ingredients");
 const submitButton = document.getElementById("submit");
+submitButton.addEventListener("click", showBrewingPotionForStudent);
 
 
-async function showBrewingPotionForStudent() {
+async function showBrewingPotionForStudent(e) {
+    event.preventDefault();
     let potion = await getBrewingPotionByStudentId(+students.value);
-    console.log(potion);
+
+    if (e != undefined) {
+        let ingredient = {
+            name: ingredients.options[ingredients.selectedIndex].text
+        };
+        potion = await addIngredientToBrewingPotion(potion.id, ingredient);
+    }
 
     let content = "";
 
@@ -38,7 +46,20 @@ async function getBrewingPotionByStudentId(id) {
     if (response.status === 200) {
         return await response.json();
     }
-    else if (response.status === 204) {
-        return await null;
+    return await null;
+}
+
+async function addIngredientToBrewingPotion(potionId, payload) {
+    "use strict";
+    let response = await fetch(`https://localhost:44390/api/Potion/${potionId}/add`, {
+        method: "PUT",
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+    });
+    if (response.ok) {
+        return await response.json();
     }
 }
