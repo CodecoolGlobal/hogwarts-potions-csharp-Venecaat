@@ -43,7 +43,7 @@ namespace HogwartsPotions.Controllers
 
         [HttpPost("brew")]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<ActionResult<ResponsePotion>> AddNewBrewingPotion([FromBody]long studentId)
+        public async Task<ActionResult<ResponseBrewingPotion>> AddNewBrewingPotion([FromBody]long studentId)
         {
             ResponseBrewingPotion brewingPotion = await _service.AddBrewingPotion(studentId);
             return StatusCode(StatusCodes.Status201Created, brewingPotion);
