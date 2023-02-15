@@ -12,7 +12,7 @@ namespace HogwartsPotions.Dto
         public BrewingStatus BrewingStatus { get; set; }
         public ResponseRecipe Recipe { get; set; }
 
-        public ResponsePotion MapTo(Potion potion)
+        public override ResponsePotion MapTo(Potion potion)
         {
             ResponseStudent responseStudent = new ResponseStudent();
             ResponseRecipe responseRecipe = new ResponseRecipe();
