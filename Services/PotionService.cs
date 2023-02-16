@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ElProyecteGrande.Interfaces.Services;
@@ -17,6 +18,12 @@ namespace HogwartsPotions.Services
         private readonly IRecipeService _recipeService;
         private readonly IIngredientService _ingredientService;
         public const int MaxIngredientsForPotions = 5;
+        private static readonly List<string> DiscoveryMsgs = new List<string>
+        {
+            "Congratulation! You discovered a new potion!",
+            "Amazing! Looks like it's a new potion!",
+            "You're a genius! We didn't know this potion!"
+        };
 
         public PotionService(HogwartsContext context, IStudentService studentService, IRecipeService recipeService, IIngredientService ingredientService)
         {
@@ -149,26 +156,32 @@ namespace HogwartsPotions.Services
                     }
                 }
                 potion.BrewingStatus = foundRecipe ? BrewingStatus.Replica : BrewingStatus.Discovery;
-
-                if (!foundRecipe)
-                {
-                    potion.Name = $"{student.Name}'s discovery";
-                    potion.Recipe = new Recipe()
-                    {
-                        Name = $"{student.Name}'s discovery",
-                        Student = student,
-                        Ingredients = ingredients.ToList()
-                    };
-                    await _recipeService.AddRecipe(potion.Recipe);
-                }
             }
-
             ResponseBrewingPotion brewingPotion = new ResponseBrewingPotion().MapTo(potion);
 
             _context.Update(potion);
             await _context.SaveChangesAsync();
 
             return brewingPotion;
+        }
+        public async Task<ResponsePotion> NameAndFinalizePotion(long potionId, string name)
+        {
+            Potion potion = await Find(potionId);
+
+            potion.Name = name;
+            potion.Recipe = new Recipe()
+            {
+                Name = name,
+                Student = potion.Student,
+                Ingredients = potion.Ingredients.ToList()
+            };
+            ResponsePotion newPotion = new ResponsePotion().MapTo(potion);
+
+            await _recipeService.AddRecipe(potion.Recipe);
+            _context.Update(potion);
+            await _context.SaveChangesAsync();
+
+            return newPotion;
         }
 
         public async Task<List<ResponseRecipeWithIngredients>> GetRecipesForBrewingPotion(long potionId)
@@ -188,6 +201,12 @@ namespace HogwartsPotions.Services
             ResponseBrewingPotion brewingPotion = brewingPotions.FirstOrDefault(p => p.Student.Id == id && p.BrewingStatus == BrewingStatus.Brew);
 
             return brewingPotion;
+        }
+
+        public string GetRandomDiscoveryMessage()
+        {
+            Random rnd = new Random();
+            return DiscoveryMsgs.ElementAt(rnd.Next(DiscoveryMsgs.Count));
         }
     }
 }

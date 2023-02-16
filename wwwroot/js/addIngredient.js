@@ -2,6 +2,8 @@
 const students = document.getElementById("students");
 const ingredients = document.getElementById("ingredients");
 const submitButton = document.getElementById("submit");
+const form = document.querySelector("form");
+
 submitButton.addEventListener("click", showBrewingPotionForStudent);
 
 
@@ -13,7 +15,9 @@ async function showBrewingPotionForStudent(e) {
         let ingredient = {
             name: ingredients.options[ingredients.selectedIndex].text
         };
-        potion = await addIngredientToBrewingPotion(potion.id, ingredient);
+        if (potion.ingredients.length < 4) {
+            potion = await addIngredientToBrewingPotion(potion.id, ingredient);
+        }
     }
 
     let content = "";
@@ -30,6 +34,10 @@ async function showBrewingPotionForStudent(e) {
             content += "</ul>";
         }
         submitButton.disabled = false;
+        if (potion.ingredients.length === 4) {
+            form.setAttribute("asp-action", "FinalizePotion");
+            submitButton.removeEventListener("click", showBrewingPotionForStudent);
+        }
     }
     else {
         content += "<p class=\"ml-4 pt-2\">You don't have any brewing potion!</p>";

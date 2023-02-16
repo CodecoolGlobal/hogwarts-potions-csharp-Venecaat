@@ -4,7 +4,7 @@
 
 <div class="row mt-5">
     <div class="col">
-        <form>
+        <form asp-action="FinalizePotion">
             <div class="form-group w-50">
                 <label for="students"><h5>Select the student</h5></label>
                 <select class="form-control mb-3" id="students" name="studentId" onchange="showBrewingPotionForStudent()">
@@ -23,11 +23,11 @@
             </div>
             @if (Model.BrewingPotion is null)
             {
-                <button id="submit" class="btn btn-primary" disabled>Add</button>
+                <input id="submit" class="btn btn-primary" type="submit" value="Add">
             }
             else
             {
-                <button id="submit" class="btn btn-primary">Add</button>
+                <input id="submit" class="btn btn-primary" type="submit" value="Add">
             }
         </form>
     </div>

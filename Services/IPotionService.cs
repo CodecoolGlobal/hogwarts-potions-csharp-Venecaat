@@ -15,4 +15,6 @@ public interface IPotionService
     Task<Potion> Find(long potionId);
     Task<List<ResponseRecipeWithIngredients>> GetRecipesForBrewingPotion(long potionId);
     Task<ResponseBrewingPotion> GetBrewingPotionByStudentId(long id);
+    string GetRandomDiscoveryMessage();
+    Task<ResponsePotion> NameAndFinalizePotion(long potionId, string name);
 }
