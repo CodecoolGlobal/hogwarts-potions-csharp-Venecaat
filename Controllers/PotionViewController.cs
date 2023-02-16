@@ -121,6 +121,14 @@ namespace HogwartsPotions.Controllers
             createdPotion.Message = brewingPotion.BrewingStatus == BrewingStatus.Discovery
                 ? _potionService.GetRandomDiscoveryMessage()
                 : "You created a potion! However it's not a new one.";
+            if (brewingPotion.BrewingStatus == BrewingStatus.Replica)
+            {
+                createdPotion.Replicas = await _potionService.GetReplicaNumber(potionId) - 1;
+            }
+            else
+            {
+                createdPotion.Replicas = 0;
+            }
 
             return View("PotionCreated", createdPotion);
         }
