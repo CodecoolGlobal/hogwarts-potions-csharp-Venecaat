@@ -6,14 +6,23 @@
 
 <div class="row mt-5">
     <div class="col">
-        <form asp-action="CreatePotion">
-            <div class="form-group w-50">
-                <label class="w-100" for="potionName"><h5>Name your potion</h5></label><br />
-                <input class="w-100" id="potionName" type="text" name="name" value="@Model.Potion.Student.Name's discovery"/>
-            </div>
-            <input name="id" value="@Model.Potion.Id" hidden/>
-            <input class="btn btn-primary" type="submit" value="Create">
-        </form>
+        @{
+            if (Model.Replicas == 0)
+            {
+                <form asp-action="CreatePotion">
+                    <div class="form-group w-50">
+                        <label class="w-100" for="potionName"><h5>Name your potion</h5></label><br/>
+                        <input class="w-100" id="potionName" type="text" name="name" value="@Model.Potion.Student.Name's discovery"/>
+                    </div>
+                    <input name="id" value="@Model.Potion.Id" hidden/>
+                    <input class="btn btn-primary" type="submit" value="Create">
+                </form>
+            }
+            else
+            {
+                <h4>This potion is created @Model.Replicas times</h4>
+            }
+        }
     </div>
     <div class="col">
         <h4>Your potion's ingredients: </h4>
