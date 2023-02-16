@@ -17,4 +17,5 @@ public interface IPotionService
     Task<ResponseBrewingPotion> GetBrewingPotionByStudentId(long id);
     string GetRandomDiscoveryMessage();
     Task<ResponsePotion> NameAndFinalizePotion(long potionId, string name);
+    Task<int> GetReplicaNumber(long potionId);
 }

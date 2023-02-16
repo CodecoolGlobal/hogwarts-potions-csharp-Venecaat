@@ -208,5 +208,13 @@ namespace HogwartsPotions.Services
             Random rnd = new Random();
             return DiscoveryMsgs.ElementAt(rnd.Next(DiscoveryMsgs.Count));
         }
+
+        public async Task<int> GetReplicaNumber(long potionId)
+        {
+            List<Potion> potions = await _context.Potions.ToListAsync();
+            Potion potion = await Find(potionId);
+
+            return potions.Count(p => p.Recipe == potion.Recipe);
+        }
     }
 }
